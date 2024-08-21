@@ -118,7 +118,7 @@ main {
     margin: 10px 0 20px;
 }
 
-button {
+.btn-1 {
     background-color: #000000;
     color: white;
     border: none;
@@ -128,7 +128,7 @@ button {
     font-size: 14px;
 }
 
-button:hover {
+.btn-1:hover {
     background-color: #333333;
 }
 
