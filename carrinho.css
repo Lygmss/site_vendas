@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+ 
+header{
+    background-color: #000000;
+    color: #fff;
+    padding: 25px 0;
+}
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+ 
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+ 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+ 
+table thead th {
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+ 
+table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+ 
+table img {
+    width: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+ 
+.produto-info {
+    display: flex;
+    align-items: center;
+}
+ 
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    font-size: 16px;
+}
+ 
+.total {
+    text-align: right;
+    margin-bottom: 20px;
+}
+ 
+.total p {
+    font-size: 18px;
+}
+ 
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #0062ff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+ 
+.checkout-btn:hover {
+    background-color: #024cc3;
+}
+ 
+ 

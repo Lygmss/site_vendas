@@ -38,9 +38,9 @@ try {
         <h1>Loja</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Produtos</a></li>
-                <li><a href="#">Carrinho</a></li>
+                <li><a href="index.php">Início</a></li>
+                <li><a href="index.php">Produtos</a></li>
+                <li><a href="carrinho.php">Carrinho</a></li>
                 <li><a href="#">Contato</a></li>
             </ul>
         </nav>
@@ -65,8 +65,11 @@ try {
                     echo $dados['descricao'];
                     ?>
                 </p>
-                <button class= 'btn-1'>Adicionar ao Carrinho</button>
-                <a href="index.php"><button class ='btn-1'>Voltar</button></a>
+                <form action="carrinho.php" method="post">
+                    <button class= 'btn-1' name= "id_produto" value="<?php echo $dados['id']?>">Adicionar ao Carrinho</button>
+                    <a href="index.php"><button class ='btn-1' type="button">Voltar</button></a>
+                </form>
+                
             </div>
            
             

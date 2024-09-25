@@ -37,9 +37,9 @@ try {
         <h1>Loja</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Produtos</a></li>
-                <li><a href="#">Carrinho</a></li>
+                <li><a href="index.php">Início</a></li>
+                <li><a href="index.php">Produtos</a></li>
+                <li><a href="carrinho.php">Carrinho</a></li>
                 <li><a href="#">Contato</a></li>
             </ul>
         </nav>
