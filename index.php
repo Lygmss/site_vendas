@@ -51,8 +51,28 @@ try {
             <label for="category">Categoria:</label>
             <select id="category">
                 <option value="all">Todos</option>
-                <option value="categoria1">Categoria 1</option>
-                <option value="categoria2">Categoria 2</option>
+                <option value="camisas">Camisas</option>
+                <option value="calcas">Calças</option>
+                <option value="jaquetas">Jaquetas</option>
+                <option value="vestidos">Vestidos</option>
+                <option value="blusas">Blusas</option>
+                <option value="shorts">Shorts</option>
+                <option value="moletons">Moletons</option>
+                <option value="casacos">Casacos</option>
+                <option value="regatas">Regatas</option>
+                <option value="blazers">Blazers</option>
+                <option value="bermudas">Bermudas</option>
+                <option value="macacoes">Macacões</option>
+                <option value="sueteres">Suéteres</option>
+            </select>
+
+            <h2>Filtros</h2>
+            <label for="tamanho">Tamanho:</label>
+            <select id="tamanho">
+                <option value="all">Todos</option>
+                <option value="p">P</option>
+                <option value="m">M</option>
+                <option value="g">G</option>
             </select>
 
             <label for="price">Faixa de Preço:</label>

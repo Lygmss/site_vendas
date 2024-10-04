@@ -121,7 +121,9 @@ if (!empty($ids)){
                 <?php
                 }
                 ?>
-
+                <?php
+                include 'funcao.php';
+                ?>
 
 
             </tbody>

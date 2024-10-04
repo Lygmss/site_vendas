@@ -1,10 +1,24 @@
+<?php
+try {
+    include "php/conexao.php";
 
+    $id = $_GET['id'];
 
+    $sql = "SELECT * FROM produtos WHERE id= :id;";
 
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id',$id);
 
+    $stmt->execute();
 
+    $dados = $stmt->fetch((PDO::FETCH_ASSOC));
 
+} catch (PDOException $err) {
 
+    echo "Não foi possível localizar os registros!".$err->getMessage();
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -19,15 +33,7 @@
 </head>
 <body>
     <header>
-        <h1>Minha Loja - Cadastro de Produtos</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html"></a></li>
-                <li><a href="produtos.html"></a></li>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
-            </ul>
-        </nav>
+        <h1>Minha Loja</h1>
     </header>
 
     <main>
@@ -47,10 +53,29 @@
                 <div class="form-group">
                     <label for="category">Categoria:</label>
                     <select id="category" name="category" required>
-                        <option value="eletronicos">Eletrônicos</option>
-                        <option value="roupas">Roupas</option>
-                        <option value="livros">Livros</option>
-                        <option value="acessorios">Acessórios</option>
+                        <option value="all">Todos</option>
+                        <option value="camisas">Camisas</option>
+                        <option value="calcas">Calças</option>
+                        <option value="jaquetas">Jaquetas</option>
+                        <option value="vestidos">Vestidos</option>
+                        <option value="blusas">Blusas</option>
+                        <option value="shorts">Shorts</option>
+                        <option value="moletons">Moletons</option>
+                        <option value="casacos">Casacos</option>
+                        <option value="regatas">Regatas</option>
+                        <option value="blazers">Blazers</option>
+                        <option value="bermudas">Bermudas</option>
+                        <option value="macacoes">Macacões</option>
+                        <option value="sueteres">Suéteres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Tamanho:</label>
+                    <select id="category" name="category" required>
+                    <option value="all">Todos</option>
+                    <option value="p">P</option>
+                    <option value="m">M</option>
+                    <option value="g">G</option>
                     </select>
                 </div>
 
