@@ -1,23 +1,67 @@
 <?php
-try {
-    include "php/conexao.php";
 
-    $id = $_GET['id'];
+if (isset($_POST['cadastrar'])){
 
-    $sql = "SELECT * FROM produtos WHERE id= :id;";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id',$id);
 
-    $stmt->execute();
+    try {
 
-    $dados = $stmt->fetch((PDO::FETCH_ASSOC));
+        // Criar variáveis para Receber os Dados
+        $nome = $_POST['nome'];
+        $descricao = $_POST['descricao'];
+        $preco = $_POST['preco'];
+        $estoque = $_POST['estoque'];
+        $categoria = $_POST['categoria'];
+        $tamanho = $_POST['tamanho'];
+        $cor = $_POST['cor'];
+        $marca = $_POST['marca'];
 
-} catch (PDOException $err) {
+        $caminho = '../img/originais/';
+        // captura a extensao da imagem enviado para upload(ex: .png)
+            $extensao = pathinfo($_FILES['imagem']['name'],PATHINFO_EXTENSION);
+            // gera um hash aleatorio para imagem
+            $hash = md5(uniqid($_FILES['imagem']['tmp_name'],true));
+            // junta o hash(nome aleatorio) = extensao
+            // ex: andvn78ikvid8987biism.jpg
+            // HASH: andvn78ikvid8987biism
+            // extensao: jpg
+            $nome_imagem= $hash.'.' .$extensao;
+        
+        
+            // executa o upload da imagem
+            move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho.$nome_imagem);
+            $caminho2 = '../img/miniaturas/';
+            copy($caminho.$nome_imagem,$caminho2.$nome_imagem);
 
-    echo "Não foi possível localizar os registros!".$err->getMessage();
+        
+            // var_dump($extensao);
+            // exit;
+        
+        // Importa o arquivo de conexão
+        include "../php/conexao.php"; // Certifique-se de que o arquivo conexao.php está no mesmo diretório
+
+        // SQL para inserir dados utilizando prepared statement
+        $sql = "INSERT INTO produtos (nome, descricao, preco, estoque, categoria, tamanho, cor, marca, imagem) VALUES (:nome, :descricao, :preco, :estoque, :categoria, :tamanho, :cor, :marca, :imagem)";
+        $stmt = $conn->prepare($sql); // Prepara a consulta SQL
+
+        // Anti SQL Injection: Bind dos parâmetros
+        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+        $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
+        $stmt->bindParam(':estoque', $estoque, PDO::PARAM_STR);
+        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_STR);
+        $stmt->bindParam(':tamanho', $tamanho, PDO::PARAM_STR);
+        $stmt->bindParam(':cor', $cor, PDO::PARAM_STR);
+        $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
+        $stmt->bindParam(':imagem', $nome_imagem, PDO::PARAM_STR);
+
+        // Executa a consulta preparada
+        $stmt->execute();
+
+    } catch (PDOException $err) {
+        echo "Não foi possível adicionar o cadastro! " . $err->getMessage();
+    }
 }
-
 ?>
 
 
@@ -39,20 +83,24 @@ try {
     <main>
         <section class="product-form">
             <h2>Cadastro de Produto</h2>
-            <form action="submit-product.html" method="POST" enctype="multipart/form-data">
+            <form action="cadastroProduto.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="productName">Nome do Produto:</label>
-                    <input type="text" id="productName" name="productName" required>
+                    <input type="text" id="productName" name="nome" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="price">Preço (R$):</label>
-                    <input type="number" id="price" name="price" required min="0" step="0.01">
+                    <label for="preco">Preço (R$):</label>
+                    <input type="number" id="preco" name="preco" required min="0" step="0.01">
                 </div>
-
+                <div class="form-group">
+                    <label for="estoque">Estoque:</label>
+                    <input type="number" id="estoque" name="estoque" required min="0" step="0.01">
+                </div>
+                
                 <div class="form-group">
                     <label for="category">Categoria:</label>
-                    <select id="category" name="category" required>
+                    <select id="category" name="categoria" required>
                         <option value="all">Todos</option>
                         <option value="camisas">Camisas</option>
                         <option value="calcas">Calças</option>
@@ -69,9 +117,30 @@ try {
                         <option value="sueteres">Suéteres</option>
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label for="category">Tamanho:</label>
-                    <select id="category" name="category" required>
+                    <label for="marca">Marca:</label>
+                    <select id="marca" name="marca" required>
+                        <option value="hering">Hering</option>
+                        <option value="lacoste">Lacoste</option>
+                        <option value="nike">nike</option>
+                        <option value="gap">gap</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cor">Cor:</label>
+                    <select id="cor" name="cor" required>
+                        <option value="azul">Azul</option>
+                        <option value="preto">Preto</option>
+                        <option value="cinza">Cinza</option>
+                        <option value="roxo">Roxo</option>
+                        <option value="branco">Branco</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tamanho">Tamanho:</label>
+                    <select id="tamanho" name="tamanho" required>
                     <option value="all">Todos</option>
                     <option value="p">P</option>
                     <option value="m">M</option>
@@ -79,17 +148,19 @@ try {
                     </select>
                 </div>
 
+               
+
                 <div class="form-group">
                     <label for="description">Descrição:</label>
-                    <textarea id="description" name="description" rows="5" required></textarea>
+                    <textarea id="description" name="descricao" rows="5" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="image">Imagem do Produto:</label>
-                    <input type="file" id="image" name="image" accept="image/*" required>
+                    <label for="imagem">Imagem do Produto:</label>
+                    <input type="file" id="image" name="imagem" accept="image/*" required>
                 </div>
 
-                <button type="submit">Cadastrar Produto</button>
+                <button name="cadastrar" type="submit">Cadastrar Produto</button>
             </form>
         </section>
     </main>

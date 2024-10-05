@@ -20,10 +20,6 @@ try {
 ?>
 
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -46,10 +42,15 @@ try {
     </header>
 
     <main>
+        
         <aside class="filter">
+            <div class="search-container">
+            <input class="search-bar" type="search" placeholder="Pesquisar...">
+            <button type="submit">Buscar</button>
+            </div>
             <h2>Filtros</h2>
             <label for="category">Categoria:</label>
-            <select id="category">
+            <select id="categoria" name="categoria">
                 <option value="all">Todos</option>
                 <option value="camisas">Camisas</option>
                 <option value="calcas">Calças</option>
@@ -68,7 +69,7 @@ try {
 
             <h2>Filtros</h2>
             <label for="tamanho">Tamanho:</label>
-            <select id="tamanho">
+            <select id="tamanho" name="name">
                 <option value="all">Todos</option>
                 <option value="p">P</option>
                 <option value="m">M</option>
@@ -99,8 +100,6 @@ try {
             ?>    
            
           
-            
-            
         </section>
     </main>
 
