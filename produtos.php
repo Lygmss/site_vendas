@@ -57,9 +57,25 @@ try {
                 echo $dados['nome'];
                 ?>
                 </h2>
-                <p class="price"> <?php
+                <p class="price" ><?php
                 echo $dados['preco'];
                 ?></p>
+                <h5>Marca</h5>
+                <p class="marca"> <?php
+                echo $dados['marca'];
+                ?>
+                </p>
+                <h5>Cor</h5>
+                <p class="cor"> <?php
+                echo $dados['cor'];
+                ?>
+                </p>
+                <h5>Tamanho</h5>
+                <p class="tamanho"> <?php
+                echo $dados['tamanho'];
+                ?>
+                </p>
+                <h5>Descrição</h5>
                 <p class="description"> 
                     <?php
                     echo $dados['descricao'];

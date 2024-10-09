@@ -129,9 +129,12 @@ button:hover {
 }
 
 .product img {
-    max-width: 100%;
+    width: 200px;
+    height: 200px;
     border-radius: 4px;
+    object-fit: cover; /* Mantém o aspecto da imagem ao cortá-la, se necessário */
 }
+
 
 .product h3 {
     font-size: 18px;
