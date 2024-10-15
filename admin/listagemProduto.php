@@ -33,12 +33,12 @@ try {
 </head>
 <body>
     <header>
-        <h1>Minha Loja - Lista de Produtos</h1>
+        <h1>Listagem de Produtos Cadastrados</h1>
+        <h3>Minha Loja</h3>
     </header>
 
     <main>
         <section class="product-list">
-            <h2>Produtos Cadastrados</h2>
             <div class="product-grid">
             <?php
             foreach($dados as $produtos){
