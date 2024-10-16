@@ -87,6 +87,8 @@ try {
                             ?>
                         </p>
                         
+                        <a href="editarProduto.php"><button>Editar</button></a>
+                        <a href="deletarProduto.php"><button>Deletar</button></a>
                     </div>
                    
                 </div>
