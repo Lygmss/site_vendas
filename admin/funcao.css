@@ -12,11 +12,19 @@
 }
 
 /* Cabeçalho */
+
+header {
+    background-color: #000000; /* Fundo preto no cabeçalho */
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
 header h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #000000;
+    color: #fdfdfd;
 }
 
 /* Estilo dos títulos */

@@ -22,7 +22,7 @@
     }
   }
 
-    // funcao cadastrar
+    // funcao cadastrar 
     if(isset ($_POST['fn_cadastrar'])){   
         cadastrarCategoria($conn,$_POST['categoria']);
     }
@@ -56,12 +56,12 @@
 <body>
     <header>
             <h1>Loja de roupas - ADM </h1>
-        </header> 
+    </header> 
     <div class="container">
         
 
         <h2>Gerenciar Categorias</h2>   
-        <form action="exemplo.php" method="POST">
+        <form action="categoria.php" method="POST">
             
             <label for="categoria">Categoria:</label>
             <input type="text" id="search" name="categoria" >
@@ -88,8 +88,9 @@
                     <td><?php echo $categoria['categoria']?></td>
                     <td><?php echo $categoria['data_cad']?></td>
                     <td>
-                        <button type="button">Alterar</button>
-                        <button type="button">Deletar</button>
+                        <form action="">
+                            <button type="button">Deletar</button>
+                        </form>
                     </td>
                 </tr>
                 <?php
