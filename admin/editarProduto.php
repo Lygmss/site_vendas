@@ -1,53 +1,56 @@
 <?php
-// verifica se um cliente foi selecionado para edição 
-    if(isset($_GET["id"])){
-        $produto_id = $_GET["id"];
-
-// conexao com o banco de dados
     include "../php/conexao.php";
+if (isset($_GET["btn-editarProdutos"])) {
+    $produto_id = $_GET['btn-editarProdutos']; // Obter o ID do produto de forma mais clara
+    editarProdutos($conn, $produto_id); // Passar o ID do produto para a função
+}
 
-    // obter os dados do cliente para edição 
+function editarProdutos($conn, $produto_id) {
+    // Selecionar o produto pelo ID fornecido
+    $sql = "SELECT * FROM produtos WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $produto_id, PDO::PARAM_INT);
+    $stmt->execute();
 
-    $sql = "SELECT * FROM produtos WHERE id = $produto_id";
-    $result = $conn->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
+    if ($row) {
+        // Processar o formulário para a edição quando enviado
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $novo_nome = $_POST["nome"];
+            $novo_descricao = $_POST["descricao"];
+            $novo_preco = $_POST["preco"];
+            $novo_estoque = $_POST["estoque"];
+            $novo_categoria = $_POST["categoria"];
+            $novo_tamanho = $_POST["tamanho"];
+            $novo_cor = $_POST["cor"];
+            $novo_marca = $_POST["marca"];
+            $novo_imagem = $_POST["imagem"];
+
+            // Atualizar os dados do produto no banco de dados com prepared statements
+            $sql_update = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, estoque = :estoque, categoria = :categoria, tamanho = :tamanho, cor = :cor, marca = :marca WHERE id = :id";
+            $stmt_update = $conn->prepare($sql_update);
+            $stmt_update->bindParam(':nome', $novo_nome);
+            $stmt_update->bindParam(':descricao', $novo_descricao);
+            $stmt_update->bindParam(':preco', $novo_preco);
+            $stmt_update->bindParam(':estoque', $novo_estoque);
+            $stmt_update->bindParam(':categoria', $novo_categoria);
+            $stmt_update->bindParam(':tamanho', $novo_tamanho);
+            $stmt_update->bindParam(':cor', $novo_cor);
+            $stmt_update->bindParam(':marca', $novo_marca);
+            $stmt_update->bindParam(':id', $produto_id, PDO::PARAM_INT);
+
+            if ($stmt_update->execute()) {
+                echo "Produto atualizado com sucesso!";
+            } else {
+                echo "Erro ao atualizar o produto.";
+            }
+        }
     } else {
-        echo "Produto não encontrado.";
-        exit;
+        echo "Produto não encontrado para edição.";
     }
-
-    // procesar o formulario para a edição quando enviado
-    if($_SERVER["REQUEST_METHOD"] == "POST") { 
-
-        $novo_nome = $_POST ["nome"];
-        $novo_descricao = $_POST ["descricao"];
-        $novo_preco = $_POST ["preco"];
-        $novo_estoque = $_POST ["estoque"];
-        $novo_categoria = $_POST ["categoria"];
-        $novo_tamanho = $_POST ["tamanho"];
-        $novo_cor = $_POST ["cor"];
-        $novo_marca = $_POST ["marca"];
-        $novo_imagem = $_POST ["imagem"];
+}
     
-        // Atualizar os dados do cliente no banco de dados
-        $sql =  "UPDATE produtos SET nome = '$novo_nome', descricao = '$novo_descricao', preco = '$novo_preco', estoque = '$novo_estoque', categoria = '$novo_categoria', tamanho = '$novo_tamanho', cor = '$novo_cor', marcar = '$novo_marca' WHERE id = $produto_id";
-
-
-    }
-    if ($conn->query($sql) === TRUE){
-        echo "Dados atualizados com sucesso!";
-    }else{
-        echo "Erro ao atualizar os dados:" . $conn->error;
-    }
-
-    $conn->close();
-
-    }else{
-        echo "Produtos não especificado para a edição";
-        exit;
-    }
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +59,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cliente</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="stylecad.css">
 </head>
 <body>
     <div id="titulo-editar">
@@ -64,44 +67,46 @@
     </div>
     <form action="" method="POST">
         <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" value="><?php echo $row
+        <input type="text" id="nome" name="nome" value="<?php echo $row
         ["nome"]; ?>"required><br>
 
          <label for="descricao">Descrição</label>
-        <input type="text" id="descricao" name="descricao" value="><?php echo $row
+        <input type="text" id="descricao" name="descricao" value="<?php echo $row
         ["descricao"]; ?>"required><br>
 
          <label for="preco">Preço</label>
-        <input type="text" id="preco" name="preco" value="><?php echo $row
+        <input type="text" id="preco" name="preco" value="<?php echo $row
         ["preco"]; ?>"required><br>
 
          <label for="estoque">Estoque</label>
-        <input type="text" id="estoque" name="estoque" value="><?php echo $row
+        <input type="text" id="estoque" name="estoque" value="<?php echo $row
         ["estoque"]; ?>"required><br>
 
         <label for="categoria">Categoria</label>
-        <input type="text" id="categoria" name="categoria" value="><?php echo $row
+        <input type="text" id="categoria" name="categoria" value="<?php echo $row
         ["categoria"]; ?>"required><br>
 
         <label for="tamanho">Tamanho</label>
-        <input type="text" id="tamanho" name="tamanho" value="><?php echo $row
+        <input type="text" id="tamanho" name="tamanho" value="<?php echo $row
         ["tamanho"]; ?>"required><br>
 
         <label for="cor">Cor</label>
-        <input type="text" id="cor" name="cor" value="><?php echo $row
+        <input type="text" id="cor" name="cor" value="<?php echo $row
         ["cor"]; ?>"required><br>
 
         <label for="marca">Marca</label>
-        <input type="text" id="marca" name="marca" value="><?php echo $row
+        <input type="text" id="marca" name="marca" value="<?php echo $row
         ["marca"]; ?>"required><br>
 
         <label for="imagem">Imagem</label>
-        <input type="text" id="imagem" name="imagem" value="><?php echo $row
+        <input type="text" id="imagem" name="imagem" value="<?php echo $row
         ["imagem"]; ?>"required><br>
 
 
-
-        <input type="submit" value="Salvar Alterações">
+        <form action="editarProdutos.php">
+            <input type="submit" value="Salvar Alterações">
+            <button type="submit" class="btn-editarProdutos" name="btn-editarProdutos">Salvar Alterações</button>
+        </form>
 
     </form>
     <br><a href="listagemProduto.php">Voltar</a>

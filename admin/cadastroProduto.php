@@ -1,67 +1,10 @@
 <?php
+    include "../php/conexao.php";
+    include "funcao.php";
 
-if (isset($_POST['cadastrar'])){
-
-
-
-    try {
-
-        // Criar variáveis para Receber os Dados
-        $nome = $_POST['nome'];
-        $descricao = $_POST['descricao'];
-        $preco = $_POST['preco'];
-        $estoque = $_POST['estoque'];
-        $categoria = $_POST['categoria'];
-        $tamanho = $_POST['tamanho'];
-        $cor = $_POST['cor'];
-        $marca = $_POST['marca'];
-
-        $caminho = '../img/originais/';
-        // captura a extensao da imagem enviado para upload(ex: .png)
-            $extensao = pathinfo($_FILES['imagem']['name'],PATHINFO_EXTENSION);
-            // gera um hash aleatorio para imagem
-            $hash = md5(uniqid($_FILES['imagem']['tmp_name'],true));
-            // junta o hash(nome aleatorio) = extensao
-            // ex: andvn78ikvid8987biism.jpg
-            // HASH: andvn78ikvid8987biism
-            // extensao: jpg
-            $nome_imagem= $hash.'.' .$extensao;
-        
-        
-            // executa o upload da imagem
-            move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho.$nome_imagem);
-            $caminho2 = '../img/miniaturas/';
-            copy($caminho.$nome_imagem,$caminho2.$nome_imagem);
-
-        
-            // var_dump($extensao);
-            // exit;
-        
-        // Importa o arquivo de conexão
-        include "../php/conexao.php"; // Certifique-se de que o arquivo conexao.php está no mesmo diretório
-
-        // SQL para inserir dados utilizando prepared statement
-        $sql = "INSERT INTO produtos (nome, descricao, preco, estoque, categoria, tamanho, cor, marca, imagem) VALUES (:nome, :descricao, :preco, :estoque, :categoria, :tamanho, :cor, :marca, :imagem)";
-        $stmt = $conn->prepare($sql); // Prepara a consulta SQL
-
-        // Anti SQL Injection: Bind dos parâmetros
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-        $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
-        $stmt->bindParam(':estoque', $estoque, PDO::PARAM_STR);
-        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_STR);
-        $stmt->bindParam(':tamanho', $tamanho, PDO::PARAM_STR);
-        $stmt->bindParam(':cor', $cor, PDO::PARAM_STR);
-        $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
-        $stmt->bindParam(':imagem', $nome_imagem, PDO::PARAM_STR);
-
-        // Executa a consulta preparada
-        $stmt->execute();
-
-    } catch (PDOException $err) {
-        echo "Não foi possível adicionar o cadastro! " . $err->getMessage();
-    }
-}
+    if (isset($_POST['cadastrar'])){
+        cadastrarProduto($conn,$_POST['cadastrar']);
+    }    
 ?>
 
 

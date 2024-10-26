@@ -21,8 +21,6 @@ try {
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -86,9 +84,16 @@ try {
                             echo $produtos['descricao'];
                             ?>
                         </p>
-                        
-                        <a href="editarProduto.php"><button>Editar</button></a>
-                        <a href="deletarProduto.php"><button>Deletar</button></a>
+                        <div>
+                        <form action="editarProduto.php" method="GET">
+                            <input type="hidden" name="id" id="id" value="<?php echo $produtos['id']?>">
+                           <button type="submit" class= "btn-editar" >Editar</button>
+                        </form>
+                        <form action="deletarProduto.php" method="GET">
+                            <input type="hidden" name="id" id="id" value="<?php echo $produtos['id']?>">
+                            <button type="submit" class= "btn-deletar" >Deletar</button>
+                        </form>
+                        </div>
                     </div>
                    
                 </div>

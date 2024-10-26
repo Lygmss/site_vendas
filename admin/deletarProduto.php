@@ -1,11 +1,11 @@
 <?php
     // verifica se um cliente foi selecionado para edição 
     if(isset($_GET["id"])){
-        $produto_id = $_GET["id"];
+        $produtos = $_GET["id"];
 
         include "../php/conexao.php";
 
-        $sql = "DELETE FROM produtos WHERE ID = $produto_id";
+        $sql = "DELETE FROM produtos WHERE id = $produtos";
 
         // Header = redireciona para a pagina produto.php
         if ($conn->query($sql) === TRUE) {

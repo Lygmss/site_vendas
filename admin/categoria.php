@@ -1,45 +1,20 @@
 <?php
     include "../php/conexao.php";
+    include "funcao.php";
 
     // funcoes que sao executadas o abrir a pagina
     $lista_categoria= listaCategoria($conn);
-    function listaCategoria($conn){
-    // listar categorias
-// SEMPRE QUE FOR SELECT É NECESSARIO ARMAZENAR OS DADOS EM UMA VARIAVEL PARA EXIBIR NA TELA(FOREACH)
-    try{
-        $sql= "SELECT * FROM categoria";
-            
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();  
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // echo"<pre>";     VERIFICAR SE TA DANDO CERTO
-        // var_dump($lista_categoria);
-    }catch(PDOException $err){
-        return[]; 
-        // retorna um array vazio em caso de erro
-    }
-  }
+    
 
     // funcao cadastrar 
     if(isset ($_POST['fn_cadastrar'])){   
         cadastrarCategoria($conn,$_POST['categoria']);
     }
-    function cadastrarCategoria($conn,$categoria){
-        try{
-            $sql= "INSERT INTO categoria(categoria) VALUES (:categoria);";
-            
-            $stmt= $conn->prepare($sql);
-            // bindparam
-            $stmt->bindParam(":categoria", $categoria);
-            // executa
-            $stmt->execute();  
-            echo "Categoria inserida com sucesso";
-        }catch(PDOException $err){
-            echo "Não foi possivel inserir a categoria $err";
-        }
-    }
+    
+
+    if(isset($_POST['fn_deletar'])){   
+        deletarCategoria($conn,$_POST['id']);
+    } 
 
 ?>
 
@@ -88,8 +63,9 @@
                     <td><?php echo $categoria['categoria']?></td>
                     <td><?php echo $categoria['data_cad']?></td>
                     <td>
-                        <form action="">
-                            <button type="button">Deletar</button>
+                        <form action="categoria.php" method="POST">
+                            <input type="hidden" name="id" id="id" value="<?php echo $categoria['id']?>">
+                            <button type="submit" class="btn-deletar" name="fn_deletar">Deletar</button>
                         </form>
                     </td>
                 </tr>
